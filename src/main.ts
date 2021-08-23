@@ -4,9 +4,13 @@ import router from './router'
 import store from './store'
 import './assets/tailwind.css'
 import Amplify from 'aws-amplify'
-import '@aws-amplify/ui-vue'
-import awsexports from './aws-exports'
+import awsconfig from './aws-exports'
+import { applyPolyfills, defineCustomElements } from '@aws-amplify/ui-components/loader'
 
-Amplify.configure(awsexports)
+Amplify.configure(awsconfig)
+
+applyPolyfills().then(() => {
+  defineCustomElements(window)
+})
 
 createApp(App).use(store).use(router).mount('#app')

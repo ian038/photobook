@@ -3,3 +3,15 @@
 @tailwind components;
 
 @tailwind utilities;
+
+.btn-green {
+  @apply bg-green-500 text-white font-bold py-2 px-4 rounded;
+}
+
+.btn-green:hover {
+  @apply bg-green-700;
+}
+
+.btn-green:focus {
+  @apply outline-none;
+}
