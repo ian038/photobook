@@ -14,6 +14,16 @@
     "categories": {
       "auth": {
         "photobookd107eaf6": {}
+      },
+      "function": {
+        "PhotobookProcessor": {
+          "deploymentBucketName": "amplify-photobook-dev-114819-deployment",
+          "s3Key": "amplify-builds/PhotobookProcessor-71356b615a436445544b-build.zip",
+          "env": "dev",
+          "region": "us-east-2",
+          "apiAmplifyphotosapiGraphqlapiidoutput": "jjintufhznbhjjmwuz3gcu4j5q",
+          "apiAmplifyphotosapiGraphqlapiendpointoutput": "https://jusymecltrftxm4ycqdnrrz4qi.appsync-api.us-east-2.amazonaws.com/graphql"
+        }
       }
     }
   }

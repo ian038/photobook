@@ -26,22 +26,24 @@
       <div class="shadow-xl ml-4 mt-4 w-4/12" v-for="(photo, idx) in photos" :key="idx">
         <amplify-s3-image
           level="protected"
-          :img-key="photo.fullsize.key"
+          :img-key="photo.thumbnail ? photo.thumbnail.key : photo.fullsize.key"
+          :key="componentKey"
           class="w-4/12"
         ></amplify-s3-image>
         <div v-if="photo.createdAt && photo.gps">
-          <!-- <ul>
+          <ul>
             <li>Created At {{ photo.createdAt }}</li>
             <li>
               latitude
               {{ photo.gps.latitude }}
             </li>
             <li>longitude At {{ photo.gps.longitude }}</li>
-          </ul> -->
+          </ul>
         </div>
         <button class="btn-red mb-4" @click="deletePhoto(photo)">Delete Photo</button>
       </div>
     </div>
+    <button class="btn-red mb-4" @click="deleteAlbum">Delete Album</button>
   </div>
 </template>
 
@@ -50,17 +52,24 @@
 type dataProps = {
   photos: Array<Record<string, string>>
   albumName: string
+  componentKey: number
 }
 
 export default {
-  mounted (): void {
-    this.getPhotos()
+  async mounted (): Promise<void> {
+    await this.getPhotos()
   },
   data: (): dataProps => ({
     photos: [],
-    albumName: ''
+    albumName: '',
+    componentKey: 0
   }),
   methods: {
+    async deleteAlbum (): Promise<void> {
+      await this.$store.dispatch('albumDetails/deleteAlbum', this.id)
+      this.$router.push('/albums')
+    },
+
     async onFileChange (file): Promise<void> {
       if (!file.target || !file.target.files[0]) return
       try {
@@ -68,7 +77,7 @@ export default {
           file: file.target.files[0],
           id: this.id
         })
-        this.getPhotos()
+        await this.getPhotos()
       } catch (error) {
         console.log('Create photo error', error)
       }
@@ -82,7 +91,8 @@ export default {
 
     async deletePhoto (photoId): Promise<void> {
       await this.$store.dispatch('albumDetails/deletePhoto', { photo: photoId })
-      this.getPhotos()
+      await this.getPhotos()
+      this.componentKey += 1
     }
   },
   computed: {

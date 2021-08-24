@@ -8,5 +8,23 @@
       ]
     }
   },
-  "lambdaLayers": []
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "env",
+      "environmentVariableName": "ENV"
+    },
+    {
+      "cloudFormationParameterName": "region",
+      "environmentVariableName": "REGION"
+    },
+    {
+      "cloudFormationParameterName": "apiAmplifyphotosapiGraphqlapiidoutput",
+      "environmentVariableName": "API_AMPLIFYPHOTOSAPI_GRAPHQLAPIIDOUTPUT"
+    },
+    {
+      "cloudFormationParameterName": "apiAmplifyphotosapiGraphqlapiendpointoutput",
+      "environmentVariableName": "API_AMPLIFYPHOTOSAPI_GRAPHQLAPIENDPOINTOUTPUT"
+    }
+  ]
 }
