@@ -30,7 +30,6 @@
           class="w-4/12"
         ></amplify-s3-image>
         <div v-if="photo.createdAt && photo.gps">
-          <button class="btn-green mb-4">Create Album</button>
           <!-- <ul>
             <li>Created At {{ photo.createdAt }}</li>
             <li>
@@ -40,6 +39,7 @@
             <li>longitude At {{ photo.gps.longitude }}</li>
           </ul> -->
         </div>
+        <button class="btn-red mb-4" @click="deletePhoto(photo)">Delete Photo</button>
       </div>
     </div>
   </div>
@@ -78,6 +78,11 @@ export default {
       const album = await this.$store.dispatch('albumDetails/getAlbum', this.id)
       this.photos = album.data.getAlbum.photos.items
       this.albumName = album.data.getAlbum.name
+    },
+
+    async deletePhoto (photoId): Promise<void> {
+      await this.$store.dispatch('albumDetails/deletePhoto', { photo: photoId })
+      this.getPhotos()
     }
   },
   computed: {

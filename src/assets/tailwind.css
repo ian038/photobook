@@ -15,3 +15,15 @@
 .btn-green:focus {
   @apply outline-none;
 }
+
+.btn-red {
+  @apply bg-red-500 text-white font-bold py-2 px-4 rounded;
+}
+
+.btn-red:hover {
+  @apply bg-red-700;
+}
+
+.btn-red:focus {
+  @apply outline-none;
+}

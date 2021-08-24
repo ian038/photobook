@@ -1,5 +1,5 @@
-import { API, graphqlOperation, Storage } from 'aws-amplify'
-import { createAlbum as createAlbumMutation, createPhoto as createPhotoMutation } from '@/graphql/mutations'
+import { API, graphqlOperation, photoPickerButton, Storage } from 'aws-amplify'
+import { createAlbum as createAlbumMutation, createPhoto as createPhotoMutation, deletePhoto as deletePhotoMutation } from '@/graphql/mutations'
 import { getAlbum as getAlbumQuery, listAlbums as listAlbumsQuery } from '@/graphql/queries'
 import { GraphQLResult } from '@aws-amplify/api-graphql'
 import { v4 as uuidv4 } from 'uuid'
@@ -64,6 +64,25 @@ export const albumDetails = {
         return Promise.resolve('Upload Success!')
       } catch (error) {
         console.log('create photo error', error)
+        return Promise.reject(error)
+      }
+    },
+
+    async deletePhoto (_, data): Promise<string> {
+      const { photo } = data
+      const key = photo.fullsize.key
+      const inputData = {
+        id: photo.id
+      }
+
+      try {
+        await Storage.remove(key, {
+          level: 'protected'
+        })
+        await API.graphql(graphqlOperation(deletePhotoMutation, { input: inputData }))
+        return Promise.resolve('Delete Success!')
+      } catch (error) {
+        console.log('delete photo error', error)
         return Promise.reject(error)
       }
     }
